@@ -35,12 +35,15 @@ public class UsuariosService implements IUsuariosService {
 	    }
 
 	    @Override
-	    public Usuarios busquedaPorId(int usuid) {
+	    public Usuarios busquedaPorId(int usuid) {//SOLO INGRESAR NUMEROS
 	        return dao.busquedaporId(usuid);
 	    }
 
 	    @Override
 	    public Usuarios busquedaPorEmail(String usuEmail) {
+	    	if (usuEmail == null || usuEmail.matches(".@.*")) {//VERIFICAR QUE TENGA @
+	    		throw new IllegalArgumentException("El email debe tener un @");
+	    	}
 	        return dao.busquedaporEmail(usuEmail);
 	    }
 	}
