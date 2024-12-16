@@ -1,8 +1,8 @@
 package co.edu.ue.entity;
 
 import java.io.Serializable;
+
 import jakarta.persistence.*;
-import java.util.List;
 
 
 /**
@@ -29,11 +29,6 @@ public class Perfiles implements Serializable {
 	@Column(name="usuarios_usu_id")
 	private int usuariosUsuId;
 
-	//bi-directional many-to-one association to Fotografias
-	@OneToMany(mappedBy="perfile")
-	private List<Fotografias> fotografias;
-
-	//bi-directional many-to-one association to Usuarios
 	@ManyToOne
 	@JoinColumn(name="usuarios_usu_id1")
 	private Usuarios usuario;
@@ -73,27 +68,6 @@ public class Perfiles implements Serializable {
 		this.usuariosUsuId = usuariosUsuId;
 	}
 
-	public List<Fotografias> getFotografias() {
-		return this.fotografias;
-	}
-
-	public void setFotografias(List<Fotografias> fotografias) {
-		this.fotografias = fotografias;
-	}
-
-	public Fotografias addFotografia(Fotografias fotografia) {
-		getFotografias().add(fotografia);
-		fotografia.setPerfile(this);
-
-		return fotografia;
-	}
-
-	public Fotografias removeFotografia(Fotografias fotografia) {
-		getFotografias().remove(fotografia);
-		fotografia.setPerfile(null);
-
-		return fotografia;
-	}
 
 	public Usuarios getUsuario() {
 		return this.usuario;
@@ -101,6 +75,12 @@ public class Perfiles implements Serializable {
 
 	public void setUsuario(Usuarios usuario) {
 		this.usuario = usuario;
+	}
+
+	@Override
+	public String toString() {
+		return "Perfiles [perId=" + perId + ", perDescripcion=" + perDescripcion + ", perNombre=" + perNombre
+				+ ", usuariosUsuId=" + usuariosUsuId + "usuario=" + usuario + "]";
 	}
 
 }

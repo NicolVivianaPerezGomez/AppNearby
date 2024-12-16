@@ -2,7 +2,6 @@ package co.edu.ue.entity;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
-import java.util.List;
 
 
 /**
@@ -31,14 +30,6 @@ public class CategoriasMatch implements Serializable {
 
 	@Column(name="cat_mat_romance")
 	private String catMatRomance;
-
-	//bi-directional many-to-one association to Citas
-	@OneToMany(mappedBy="categoriasMatch")
-	private List<Citas> citas;
-
-	//bi-directional many-to-one association to Matches
-	@OneToMany(mappedBy="categoriasMatch")
-	private List<Matches> matches;
 
 	public CategoriasMatch() {
 	}
@@ -83,48 +74,21 @@ public class CategoriasMatch implements Serializable {
 		this.catMatRomance = catMatRomance;
 	}
 
-	public List<Citas> getCitas() {
-		return this.citas;
+
+	
+	public CategoriasMatch orElse(CategoriasMatch cateogria) {
+		return null;
+	}
+	public static int findById(int catMatId2) {
+		return catMatId2;
 	}
 
-	public void setCitas(List<Citas> citas) {
-		this.citas = citas;
+	@Override
+	public String toString() {
+		return "CategoriasMatch [catMatId=" + catMatId + ", catMatAmistad=" + catMatAmistad + ", catMatCasual="
+				+ catMatCasual + ", catMatDiversion=" + catMatDiversion + ", catMatRomance=" + catMatRomance
+				+ ", citas="  + "]";
 	}
 
-	public Citas addCita(Citas cita) {
-		getCitas().add(cita);
-		cita.setCategoriasMatch(this);
-
-		return cita;
-	}
-
-	public Citas removeCita(Citas cita) {
-		getCitas().remove(cita);
-		cita.setCategoriasMatch(null);
-
-		return cita;
-	}
-
-	public List<Matches> getMatches() {
-		return this.matches;
-	}
-
-	public void setMatches(List<Matches> matches) {
-		this.matches = matches;
-	}
-
-	public Matches addMatch(Matches match) {
-		getMatches().add(match);
-		match.setCategoriasMatch(this);
-
-		return match;
-	}
-
-	public Matches removeMatch(Matches match) {
-		getMatches().remove(match);
-		match.setCategoriasMatch(null);
-
-		return match;
-	}
 
 }

@@ -2,9 +2,8 @@ package co.edu.ue.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,13 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import co.edu.ue.entity.Usuarios;
 import co.edu.ue.service.IUsuariosService;
 
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("usuarios")
 public class UsuariosController {
 
 	@Autowired
@@ -38,8 +38,8 @@ public class UsuariosController {
 
 	// ELIMINAR USUARIO
 	@DeleteMapping("/{id}")
-	public boolean eliminarUsuario(@PathVariable int id) {
-		return servicio.eliminarUsuario(id);
+	public Usuarios eliminarUsuario(@PathVariable int usuId) {
+		return servicio.eliminarUsuario(usuId);
 	}
 
 	// MOSTRAR TODOS LOS USUARIOS
@@ -52,13 +52,13 @@ public class UsuariosController {
 	
 	//BUSCAR USUARIO POR ID
 	@GetMapping("/{id}")
-	public Usuarios busquedaPorId(@PathVariable int id) {
-		return servicio.busquedaPorId(id);
+	public Usuarios busquedaPorId(@RequestParam int usuId) {
+		return servicio.busquedaPorId(usuId);
 	}
 
 	// BUSCAR BUSCAR USUARIO POR CORREO
 	@GetMapping("/email/{email}")
-	public Usuarios busquedaPorEmail(@PathVariable String email) {
-		return servicio.busquedaPorEmail(email);
+	public Usuarios busquedaPorEmail(@PathVariable String usuEmail) {
+		return servicio.busquedaPorEmail(usuEmail);
 	}
 }

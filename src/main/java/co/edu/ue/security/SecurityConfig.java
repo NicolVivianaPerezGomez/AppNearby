@@ -16,6 +16,8 @@ import java.util.List;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+	
+	//http://localhost:8080/swagger-ui/index.html
 
 	
 	@Bean  //ME PERMITE VOLVERLO O INYECTARLO COMO UN OBJETO
@@ -35,26 +37,49 @@ public class SecurityConfig {
 				
 		return new InMemoryUserDetailsManager(users);
 	}
-	
+
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-	    http.csrf(cus->cus.disable())
-	    .authorizeHttpRequests(aut->
-	        aut.requestMatchers(HttpMethod.POST,"/usuarios").hasAnyRole("ADMINS")
-	        .requestMatchers(HttpMethod.GET,"/usuarios").authenticated()
-	        .requestMatchers(HttpMethod.GET,"/usuarios/{id}").authenticated()
-	        .requestMatchers(HttpMethod.GET,"/usuarios/email/{email}").authenticated()
-	        .requestMatchers(HttpMethod.PUT,"/usuarios").authenticated()
-	        .requestMatchers(HttpMethod.DELETE,"/usuarios/{id}").hasAnyRole("ADMINS")
-	        .requestMatchers(HttpMethod.POST,"/perfiles").authenticated()
-            .requestMatchers(HttpMethod.GET,"/perfiles").authenticated()
-            .requestMatchers(HttpMethod.GET,"/perfiles/{id}").authenticated()
-            .requestMatchers(HttpMethod.PUT,"/perfiles").authenticated()
-            .requestMatchers(HttpMethod.DELETE,"/perfiles/{id}").hasAnyRole("ADMINS")
-	    )
-	    .httpBasic(Customizer.withDefaults());
-	    return http.build();
-	}
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(aut->{
+        aut.requestMatchers(org.springframework.http.HttpMethod.POST,"/usuarios").hasAnyRole("ADMINS")
+        .requestMatchers(org.springframework.http.HttpMethod.GET,"/usuarios").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.GET,"/usuarios/{id}").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.GET,"/usuarios/email/{email}").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.PUT,"/usuarios").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE,"/{id}").hasAnyRole("ADMINS")
+        .requestMatchers(org.springframework.http.HttpMethod.POST,"/perfiles").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.GET,"/perfiles").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.GET,"/perfiles/{id}").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.PUT,"/perfiles").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE,"/perfiles/{id}").hasAnyRole("ADMINS")
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/matches").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/matches/{id}").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/matches").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/matches/{id}").hasAnyRole("ADMINS")
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/citas").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/citas/{id}").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.POST, "/citas").hasAnyRole("USER", "ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/citas/{id}").hasAnyRole("USER", "ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/citas/{id}").hasRole("ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/citas/fecha/{fecha}").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/citas/estado/{estado}").permitAll()
+        .requestMatchers(org.springframework.http.HttpMethod.POST, "categorias-match").hasAnyRole("ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "categorias-match").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "categorias-match/{id}").authenticated()
+        .requestMatchers(org.springframework.http.HttpMethod.PUT, "categorias-match").hasAnyRole("ADMIN", "USER")
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "categorias-match/{id}").hasRole("ADMIN")
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/fotografias").authenticated() 
+        .requestMatchers(org.springframework.http.HttpMethod.GET, "/fotografias/{id}").authenticated() 
+        .requestMatchers(org.springframework.http.HttpMethod.PUT, "/fotografias").hasAnyRole("ADMIN", "USER") 
+        .requestMatchers(org.springframework.http.HttpMethod.DELETE, "/fotografias/{id}").hasRole("ADMIN") 
+        .anyRequest().permitAll();
 
+            })
+            .httpBasic(Customizer.withDefaults())
+            .formLogin(login -> login.permitAll());
+        
 
+        return http.build();
+    }
 }

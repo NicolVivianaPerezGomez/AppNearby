@@ -4,31 +4,25 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
 
-
 /**
  * The persistent class for the fotografias database table.
  * 
  */
 @Entity
-@NamedQuery(name="Fotografias.findAll", query="SELECT f FROM Fotografias f")
+@NamedQuery(name = "Fotografias.findAll", query = "SELECT f FROM Fotografias f")
 public class Fotografias implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="fot_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "fot_id")
 	private int fotId;
 
 	@Temporal(TemporalType.DATE)
 	private Date fot_fechaSubida;
 
-	@Column(name="perfiles_per_id")
+	@Column(name = "perfiles_per_id")
 	private int perfilesPerId;
-
-	//bi-directional many-to-one association to Perfiles
-	@ManyToOne
-	@JoinColumn(name="perfiles_per_id1")
-	private Perfiles perfile;
 
 	public Fotografias() {
 	}
@@ -57,12 +51,10 @@ public class Fotografias implements Serializable {
 		this.perfilesPerId = perfilesPerId;
 	}
 
-	public Perfiles getPerfile() {
-		return this.perfile;
-	}
-
-	public void setPerfile(Perfiles perfile) {
-		this.perfile = perfile;
+	@Override
+	public String toString() {
+		return "Fotografias [fotId=" + fotId + ", fot_fechaSubida=" + fot_fechaSubida + ", perfilesPerId="
+				+ perfilesPerId + "]";
 	}
 
 }

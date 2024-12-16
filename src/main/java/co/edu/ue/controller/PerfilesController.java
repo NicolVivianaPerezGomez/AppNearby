@@ -18,7 +18,7 @@ import co.edu.ue.entity.Perfiles;
 import co.edu.ue.service.IPerfilesService;
 
 @RestController
-@RequestMapping("/perfiles")
+@RequestMapping("perfiles")
 public class PerfilesController {
 
     @Autowired//CABLEAMOS LA CAPA INTERFACE PERFILES SERVICE PARA OBTENER NUESTRO CRUD Y CONSULTAS
@@ -40,7 +40,7 @@ public class PerfilesController {
     }
     
     //ELIMINAR UN PERFIL
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> eliminarPerfil(@PathVariable int id) {
         boolean eliminado = service.eliminarPerfil(id);
         return eliminado ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
@@ -54,14 +54,14 @@ public class PerfilesController {
     }
     
     //CONSULTAR PERFIL POR ID
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<Perfiles> busquedaPorId(@PathVariable int id) {
         Perfiles perfil = service.busquedaPorId(id);
         return perfil != null ? ResponseEntity.ok(perfil) : ResponseEntity.notFound().build();
     }
     
     //CONSULTA PERFIR POR USUARIOID
-    @GetMapping("/usuario/{usuarioId}")
+    @GetMapping("usuario/{usuarioId}")
     public ResponseEntity<List<Perfiles>> busquedaPorUsuarioId(@PathVariable int usuarioId) {
         List<Perfiles> perfiles = service.busquedaPorUsuarioId(usuarioId);
         return perfiles != null && !perfiles.isEmpty() ? ResponseEntity.ok(perfiles) : ResponseEntity.notFound().build();

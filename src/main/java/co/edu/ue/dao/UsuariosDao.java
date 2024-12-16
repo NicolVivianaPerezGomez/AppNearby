@@ -1,10 +1,9 @@
 package co.edu.ue.dao;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import co.edu.ue.entity.Perfiles;
 import co.edu.ue.entity.Usuarios;
 import co.edu.ue.jpa.IUsuariosJpa;
 
@@ -25,21 +24,6 @@ public class UsuariosDao implements IUsuariosDao {
 	}
 
 	@Override
-	public Usuarios actualizarusuarios(Usuarios usuario) {
-		return jpa.save(usuario);
-	}
-
-	@Override
-	public boolean eliminarUsuarios(int usuid) {
-		Usuarios usuario = busquedaporId(usuid);
-		if (usuario != null) {
-			jpa.delete(usuario);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
 	public List<Usuarios> listaCompleta() {
 		return jpa.findAll();
 	}
@@ -56,11 +40,11 @@ public class UsuariosDao implements IUsuariosDao {
 
 	@Override
 	public Usuarios actualizarUsuarios(Usuarios usuario) {
-		return jpa.save(usuario);
+		return null;
 	}
 
 	@Override
-	public Perfiles guardarPerfil(Perfiles perfil) {
+	public Usuarios eliminarUsuarios(int usuid) {
 		return null;
 	}
 

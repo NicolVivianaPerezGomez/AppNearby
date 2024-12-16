@@ -10,7 +10,6 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Citas.findAll", query="SELECT c FROM Citas c")
 public class Citas implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +36,6 @@ public class Citas implements Serializable {
 
 	@Column(name="matches_mat_id1")
 	private int matchesMatId1;
-
-	//bi-directional many-to-one association to CategoriasMatch
-	@ManyToOne
-	@JoinColumn(name="categorias_match_cat_mat_id")
-	private CategoriasMatch categoriasMatch;
 
 	public Citas() {
 	}
@@ -102,12 +96,12 @@ public class Citas implements Serializable {
 		this.matchesMatId1 = matchesMatId1;
 	}
 
-	public CategoriasMatch getCategoriasMatch() {
-		return this.categoriasMatch;
-	}
 
-	public void setCategoriasMatch(CategoriasMatch categoriasMatch) {
-		this.categoriasMatch = categoriasMatch;
+	@Override
+	public String toString() {
+		return "Citas [citId=" + citId + ", citEstado=" + citEstado + ", citFecha=" + citFecha + ", citHora=" + citHora
+				+ ", citUbicacion=" + citUbicacion + ", matchesMatId=" + matchesMatId + ", matchesMatId1="
+				+ matchesMatId1 +  "]";
 	}
 
 }

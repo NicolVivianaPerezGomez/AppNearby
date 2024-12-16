@@ -47,4 +47,6 @@ public class PerfilesDao implements IPerfilesDao {
     public List<Perfiles> busquedaPorUsuarioId(int usuariousuId) {
         return jpa.findByUsuario_UsuId(usuariousuId);
     }
+    
+ 
 }
